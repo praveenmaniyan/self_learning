@@ -14746,6 +14746,11 @@ RK5CYII=
 <p><strong>Answer: </strong></p>
 <p>At a max_depth of 1, the model suffers from high bias.</p>
 <p>At a max_depth of 10, the model suffers from high variance. The training score is much higher than the validation score.</p>
+<p>Post Reveiw #2</p>
+<p>At max_depth of 1, the model suffers from high bias. This is evident from the following visual cues:</p>
+<p>Both training and testing scores are low
+There is barely a gap between the training and testing scores
+This indicates the model is not fitting the dataset well and not generalizing well hence the model is suffering from high bias</p>
 
 </div>
 </div>
@@ -14836,6 +14841,8 @@ RK5CYII=
 <p>After the completion of loop, we calculate the averages of the accuracies and parameters or pick the best out of the complete slot, and assign those as the average accuracies(score) or optimal parameter values.</p>
 <p>During the Grid search, the K-Fold CV helps a lot by determining the best optimal parameter. For instance, for finding the max_depth problem, as descibed above, maybe in the first iteration of the K-Fold, the max_depth could be say 4. In the next iteration it could be 1, in the next, it could be 6, and so on. However, now we can compare the scores for each iteration, and then see which is the max_depth value that gives the best score, and that could be the optimal value. This happens due to the fact that, during the K-Fold CV, we provide the model a chance to look at all the data (but not violating the Train/Test rule) and then arrive at a good/best/optimal value.</p>
 <p>If we limit the Grid Seach to a single dataset there is a chance of overfitting. If we limit the Grid search to a limited dataset out of the complete set, there is a chance of underfitting also.</p>
+<p>Post Review #2</p>
+<p>Yes, agreed, during the Grid search we train only on the Trainig set, however, with K-Fold, we give the grid search to go through the whole available data atleast once, and then based upon the scores, we can choose a best value for the hyperparameters.</p>
 
 </div>
 </div>
@@ -14995,6 +15002,8 @@ For the <code>fit_model</code> function in the code cell below, you will need to
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong> Hint: </strong> The answer comes from the output of the code snipped above.</p>
 <p><strong>Answer: </strong> The optimal max_depth value comes as 4</p>
+<p>Post Review #2</p>
+<p>This result is different from my initial intuition from Question 6. The optimal model attempts to decrease variance and bias and to achieve this the model complexity can't be too low or too high.</p>
 
 </div>
 </div>
@@ -15090,6 +15099,18 @@ Predicted selling price for Client 3&#39;s home: $931,636.36
 <p><strong>Answer: </strong></p>
 <p>The recommended prices for the Client 1, Client 2 and Client 3 from the model are $403,025.00, $237,478.72 and $931,636.36 respectively</p>
 <p>With the Mean value of $454,342.94 from the data, since the Client 2's data seems to be in the between features of Client 1 and 3, the recommened price seems to be correct in comparison to the provided data.</p>
+<p>Post Review #2</p>
+<p>From Data Exploration:</p>
+<p>Minimum price: $105,000.00</p>
+<p>Maximum price: $1,024,800.00</p>
+<p>Mean price: $454,342.94</p>
+<p>Median price $438,900.00</p>
+<p>Standard deviation of prices: $165,171.13</p>
+<p>Compared to the data-exploration, it seems that the houses' prices from client 1 and client 2 are below the mean and median prices
+    For client 2, it seems reasonable due to the high poverty level and student-to-teacher ratio
+    For client 1, it also seems reasonable due to the average poverty level and student-to-teacher ratio</p>
+<p>And the house's price from client 3 is way above the mean and median prices, nearing to the maximum price in the dataset
+    This seems reasonable given the low poverty level and student-to-teacher ratio with a high number of rooms</p>
 
 </div>
 </div>
