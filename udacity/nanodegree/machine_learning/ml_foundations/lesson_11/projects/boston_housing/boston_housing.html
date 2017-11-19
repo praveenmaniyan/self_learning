@@ -12918,6 +12918,16 @@ HMdxnKLhQsdxHMcpGi50HMdxnKLhQsdxHMcpGi50HMdxnKLxf+EOX3/R0in+AAAAAElFTkSuQmCC
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: Looking at the correlation results from the various method explored, it is very much clear that the variable PTRATIO does not have any significant impact on the MEDV (prices) variable. However, RM seems to having a positive impact on MEDV and LSTAT seems to having a negative impact on MEDV. This is also very clear with the Scatter plot of RM, LSTAT and PTRATIO against the MEDV variable. </strong></p>
+<p>Post Review #3</p>
+<p>RM</p>
+<p>For a higher RM, one would expect to observe a higher MEDV</p>
+<p>This is because more rooms would imply more space, thereby costing more, taking all other factors constant</p>
+<p>LSTAT</p>
+<p>For a higher LSTAT, one would expect to observe a a lower MEDV</p>
+<p>The social milieux in an area dominated by "lower class" citizens may not be conducive for young children. It may also be relatively unsafe compared to an area dominated by "upper class" citizens. Hence an area with more "lower class" citizens would lower demand, hence lower prices</p>
+<p>PTRATIO</p>
+<p>For a higher LSTAT, one would expect to observe a lower MEDV</p>
+<p>This is because there would be a lower teacher-to-student ratio resulting in less attention dedicated to each student that may impair their performance in school. Typically this is the scenario in public/state schools compared to private schools. And the prices of houses around public schools are generally lower than those around private schools. Hence one would expect a lower price given a high student-to-teacher ratio due to a lower demand for houses in such areas</p>
 
 </div>
 </div>
@@ -14843,6 +14853,8 @@ This indicates the model is not fitting the dataset well and not generalizing we
 <p>If we limit the Grid Seach to a single dataset there is a chance of overfitting. If we limit the Grid search to a limited dataset out of the complete set, there is a chance of underfitting also.</p>
 <p>Post Review #2</p>
 <p>Yes, agreed, during the Grid search we train only on the Trainig set, however, with K-Fold, we give the grid search to go through the whole available data atleast once, and then based upon the scores, we can choose a best value for the hyperparameters.</p>
+<p>Post Review #3</p>
+<p>Yes, agreed, we keep a different test set, and we run the K-Fold cross validation and Grid search on complete training set, will never include the original Test set in it.</p>
 
 </div>
 </div>
