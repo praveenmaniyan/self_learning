@@ -39,15 +39,15 @@ class LearningAgent(Agent):
             self.alpha = 0.0
         else:
             # commented out testing parameters
-            # self.epsilon = self.epsilon - 0.05
+            self.epsilon = self.epsilon - 0.05
             self.t += 1.0
             #self.epsilon = 1.0/(self.t**2)
             #self.epsilon = 1.0/(self.t**2 + self.alpha*self.t)
             #self.epsilon = 1.0/(self.t**2 - self.alpha*self.t)
             #self.epsilon = math.fabs(math.cos(self.alpha*self.t))
-            self.epsilon = math.fabs(math.cos(self.alpha*self.t))/(self.t**2)
+            #self.epsilon = math.fabs(math.cos(self.alpha*self.t))/(self.t**2)
             # self.epsilon = 1.0/(self.t**2)
-            self.epsilon = math.fabs(math.cos(self.alpha*self.t))
+            #self.epsilon = math.fabs(math.cos(self.alpha*self.t))
 
         return None
 
@@ -67,15 +67,9 @@ class LearningAgent(Agent):
         #   For each action, set the Q-value for the state-action pair to 0
 
         # helper to create state string
-        def xstr(s):
-            if s is None:
-                return 'None'
-            else:
-                return str(s)
-        
-        state = xstr(waypoint) + "_" + inputs['light'] + "_" + xstr(inputs['left']) + "_" +  xstr(inputs['oncoming'])
-        if self.learning:
-            self.Q[state] = self.Q.get(state, {None:0.0, 'forward':0.0, 'left':0.0, 'right':0.0})
+		
+        # Post 1st review, creating a tuple for the state
+        state = (waypoint, inputs['light'], inputs['left'], inputs['oncoming'])
         return state
 
 
@@ -88,6 +82,10 @@ class LearningAgent(Agent):
         maxQ = -1000.0
         for action in self.Q[state]:
             if maxQ < self.Q[state][action]:
+			# Post 1st review, trying .values, seems will not work as it is float value. Did not understand this review comment
+                print(self.Q[state][action])
+                print(type(self.Q[state][action]))
+                #print(self.Q[state][action].values())
                 maxQ = self.Q[state][action]
         return maxQ
 
@@ -141,6 +139,8 @@ class LearningAgent(Agent):
         #   Use only the learning rate 'alpha' (do not use the discount factor 'gamma')
         if self.learning:
             self.Q[state][action] = self.Q[state][action] + self.alpha*(reward-self.Q[state][action])
+			# Post 1st review, implement the Bellman Equation
+            self.Q[state][action] = (1 - self.alpha) * self.Q[state][action] + self.alpha * reward
 
         return
 
@@ -177,7 +177,8 @@ def run():
     #   learning   - set to True to force the driving agent to use Q-learning
     #    * epsilon - continuous value for the exploration factor, default is 1
     #    * alpha   - continuous value for the learning rate, default is 0.5
-    agent = env.create_agent(LearningAgent, learning=True, alpha=0.01)
+    #agent = env.create_agent(LearningAgent, learning=True, alpha=0.01)
+    agent = env.create_agent(LearningAgent, learning=True)
     
     ##############
     # Follow the driving agent
@@ -192,7 +193,7 @@ def run():
     #   display      - set to False to disable the GUI if PyGame is enabled
     #   log_metrics  - set to True to log trial and simulation results to /logs
     #   optimized    - set to True to change the default log file name
-    sim = Simulator(env, update_delay=0.01, log_metrics=True, display=False, optimized=True)
+    sim = Simulator(env, update_delay=0.01, log_metrics=True, display=False, optimized=False)
     #sim = Simulator(env)
     
     ##############
@@ -200,7 +201,8 @@ def run():
     # Flags:
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05 
     #   n_test     - discrete number of testing trials to perform, default is 0
-    sim.run(n_test=100, tolerance=0.001)
+    #sim.run(n_test=10, tolerance=0.001)
+    sim.run(n_test=10)
     #sim.run()
 
 
