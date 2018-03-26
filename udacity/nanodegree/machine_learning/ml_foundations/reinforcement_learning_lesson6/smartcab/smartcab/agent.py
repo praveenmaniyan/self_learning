@@ -20,8 +20,10 @@ class LearningAgent(Agent):
         self.alpha = alpha       # Learning factor
 
         # Set any additional class parameters as needed
-        self.t = 0
-        random.seed(1177)
+        # Setting a test parameter so as to test an epsilon calculation parameter
+		# This would inturn give new values for epsilon for the decaying function
+		self.test_parameter = 0
+
 
     def reset(self, destination=None, testing=False):
         """ The reset function is called at the beginning of each trial.
@@ -39,15 +41,17 @@ class LearningAgent(Agent):
             self.alpha = 0.0
         else:
             # commented out testing parameters
+			# The following epsilon parameter is the default decaying function
             self.epsilon = self.epsilon - 0.05
-            self.t += 1.0
-            #self.epsilon = 1.0/(self.t**2)
-            #self.epsilon = 1.0/(self.t**2 + self.alpha*self.t)
-            #self.epsilon = 1.0/(self.t**2 - self.alpha*self.t)
-            #self.epsilon = math.fabs(math.cos(self.alpha*self.t))
-            #self.epsilon = math.fabs(math.cos(self.alpha*self.t))/(self.t**2)
-            # self.epsilon = 1.0/(self.t**2)
-            #self.epsilon = math.fabs(math.cos(self.alpha*self.t))
+            self.test_parameter += 1.0
+			# The following can be uncommented for each run of the Q Learning optimization to find the best
+            #self.epsilon = 1.0/(self.test_parameter ** 2)
+            #self.epsilon = 1.0/(self.test_parameter ** 2 + self.alpha * self.test_parameter)
+            #self.epsilon = 1.0/(self.test_parameter ** 2 - self.alpha * self.test_parameter)
+            #self.epsilon = math.fabs(math.cos(self.alpha * self.test_parameter))
+            #self.epsilon = math.fabs(math.cos(self.alpha * self.test_parameter))/(self.test_parameter ** 2)
+            #self.epsilon = 1.0/(self.test_parameter ** 2)
+            #self.epsilon = math.fabs(math.cos(self.alpha * self.test_parameter))
 
         return None
 
@@ -138,7 +142,6 @@ class LearningAgent(Agent):
         # When learning, implement the value iteration update rule
         #   Use only the learning rate 'alpha' (do not use the discount factor 'gamma')
         if self.learning:
-            self.Q[state][action] = self.Q[state][action] + self.alpha*(reward-self.Q[state][action])
 			# Post 1st review, implement the Bellman Equation
             self.Q[state][action] = (1 - self.alpha) * self.Q[state][action] + self.alpha * reward
 
