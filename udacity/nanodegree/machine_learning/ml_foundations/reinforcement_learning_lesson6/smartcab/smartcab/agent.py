@@ -127,7 +127,12 @@ class LearningAgent(Agent):
         # Set the agent state and default action
         self.state = state
         self.next_waypoint = self.planner.next_waypoint()
-        action = None
+        
+        # Changes after post review, in the Code Review section
+        # I can either comment out this code, or provide a default action. However, one clarity, the action will be choosen, 
+        # in the below code (TO DO), hence, does making action to default action make any difference
+        #action = None
+        action = random.choice(Environment.valid_actions)
 
         ########### 
         ## TO DO ##
@@ -136,15 +141,20 @@ class LearningAgent(Agent):
         # When learning, choose a random action with 'epsilon' probability
         # Otherwise, choose an action with the highest Q-value for the current state
         # Be sure that when choosing an action with highest Q-value that you randomly select between actions that "tie".
+        
+        # Changes after post review, in the section "Implement a Q-Learning Driving Agent"
         if not self.learning:
             action = random.choice(Environment.valid_actions)
         else:
-            l_maxQ = self.get_maxQ(state)
-            l_maxQ_actions = [] # build the list of actions that match with maxQ values
-            for each_action in self.Q[state]:
-                if self.Q[state][each_action] == l_maxQ:
-                    l_maxQ_actions.append(each_action) # append each action to a list that match maxQ
-            action = random.choice(l_maxQ_actions) # choose a random action if there is a tie, if there is only one, that that would be chosen
+            if random.random() < self.epsilon:
+                action = random.choice(Environment.valid_actions)
+            else:
+                l_maxQ = self.get_maxQ(state)
+                l_maxQ_actions = [] # build the list of actions that match with maxQ values
+                for each_action in self.Q[state]:
+                    if self.Q[state][each_action] == l_maxQ:
+                        l_maxQ_actions.append(each_action) # append each action to a list that match maxQ
+                action = random.choice(l_maxQ_actions) # choose a random action if there is a tie, if there is only one, that that would be chosen
         return action
 
 
